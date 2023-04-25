@@ -1,6 +1,7 @@
 #!/bin/bash
-# This is an old version, but we know it works, so will not attempt an upgrade right now.
-version=2.302.1
+# This will always get the latest version of the runner binary.
+
+version=`curl -s https://api.github.com/repos/actions/runner/releases/latest | jq -r .tag_name | cut -c 2-`
 arch=$(/usr/bin/arch)
 # On Intel the arch is returned as i386, so we have to change it to x64.
 if [ $arch != arm64 ]; then
@@ -9,10 +10,11 @@ fi
 file=actions-runner-osx-$arch-$version.tar.gz
 url=https://github.com/actions/runner/releases/download/v$version/$file
 
-mkdir -p /Users/admin/agent
-cp connect.sh /Users/admin/agent/
-cp svc.sh /Users/admin/agent/
-cd /Users/admin/agent/
+mkdir -p $HOME/agent
+cp connect.sh $HOME/agent/
+cp svc.sh $HOME/agent/
+cp utils.sh $HOME/agent/
+cd $HOME/agent/
 
 curl -o $file -L $url 
 tar xzf ./$file
