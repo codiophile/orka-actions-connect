@@ -11,7 +11,7 @@ github_app_private_key_file=`mktemp`
 sed -E 's/(-+(BEGIN|END) RSA PRIVATE KEY-+) *| +/\1\n/g' <<< $(fetch_encrypted_metadata github_app_private_key) > $github_app_private_key_file
 vm_name=`fetch_metadata orka_vm_name`
 repo_url="https://github.com/$user/$repo"
-jwt=`$HOME/agent/get-jwt.py $github_app_private_key_file $github_app_id`
+jwt=`$RUNNER_APPLICATION_DIRECTORY/get-jwt.py $github_app_private_key_file $github_app_id`
 pat=`get_app_token $jwt $github_app_installation_id`
 
 runner_token=$(curl \
