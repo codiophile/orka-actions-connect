@@ -1,6 +1,6 @@
 #!/bin/bash
-# This is an old version, but we know it works, so will not attempt an upgrade right now.
-version=2.302.1
+# This gets the latest version of the runner.
+version=`curl -s https://api.github.com/repos/actions/runner/releases/latest | jq -r .tag_name | cut -c 2-`
 arch=$(/usr/bin/arch)
 # On Intel the arch is returned as i386, so we have to change it to x64.
 if [ $arch != arm64 ]; then
