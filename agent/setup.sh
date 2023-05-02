@@ -14,6 +14,7 @@ mkdir -p $HOME/agent
 cp connect.sh $HOME/agent/
 cp svc.sh $HOME/agent/
 cp utils.sh $HOME/agent/
+cp get-github-jwt.py $HOME/get-github-jwt.py
 cd $HOME/agent/
 
 curl -o $file -L $url 
