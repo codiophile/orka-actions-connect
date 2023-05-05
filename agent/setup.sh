@@ -13,8 +13,9 @@ url=https://github.com/actions/runner/releases/download/v$version/$file
 mkdir -p $HOME/agent
 cp connect.sh $HOME/agent/
 cp svc.sh $HOME/agent/
-cp utils.sh $HOME/agent/
-cp get-github-jwt.py $HOME/get-github-jwt.py
+chmod +x get-github-pat.sh
+sudo cp get-github-pat.sh /usr/local/bin/get-github-pat
+cp get-github-jwt.py $HOME/agent/get-github-jwt.py
 cd $HOME/agent/
 
 curl -o $file -L $url 
