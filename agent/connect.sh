@@ -2,8 +2,7 @@
 
 RUNNER_APPLICATION_DIRECTORY=$HOME/
 fetch_metadata() {
-    local metadata=$(curl -s "http://169.254.169.254/metadata/$1" | jq -r .value);
-    echo $metadata
+    curl -s "http://169.254.169.254/metadata/$1" | jq -r .value
 }
 
 vm_name=`fetch_metadata orka_vm_name`
