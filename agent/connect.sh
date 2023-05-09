@@ -6,19 +6,14 @@ fetch_metadata() {
     echo $metadata
 }
 
-fetch_encrypted_metadata() {
-    local metadata=$(curl -s "http://169.254.169.254/metadata/$1" | jq -r .value | openssl enc -d -aes-256-cbc -a -K $METADATA_ENCRYPTION_KEY -iv $METADATA_ENCRYPTION_IV);
-    echo $metadata
-}
-
 vm_name=`fetch_metadata orka_vm_name`
-user=`fetch_encrypted_metadata github_user`
-repo=`fetch_encrypted_metadata github_repo_name`
+user=`fetch_metadata github_user`
+repo=`fetch_metadata github_repo_name`
 pat=`get-github-pat`
 if [ $? -eq 1 ]; then
 	echo 'get-github-pat exited with error code 1. trying to get pat from metadata'
 	unset pat
-	pat=`fetch_encrypted_metadata github_pat`
+	pat=`fetch_metadata github_pat`
 fi
 
 runner_token=$(curl \
