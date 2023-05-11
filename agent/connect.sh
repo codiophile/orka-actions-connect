@@ -1,6 +1,4 @@
 #!/bin/bash
-
-RUNNER_APPLICATION_DIRECTORY=$HOME
 fetch_metadata() {
     curl -s "http://169.254.169.254/metadata/$1" | \
         python3 -c "import sys, json; print(json.load(sys.stdin)['value'])"
@@ -23,7 +21,7 @@ runner_token=$(curl \
 "https://api.github.com/repos/$user/$repo/actions/runners/registration-token" | \
         python3 -c "import sys, json; print(json.load(sys.stdin)['token'])")
 
-cd $RUNNER_APPLICATION_DIRECTORY/agent
+cd $HOME/agent
 echo "export GITHUB_TOKEN=$pat" >> $HOME/.bashrc
 ./config.sh --url $repo_url --token $runner_token --runnergroup "Default" --name $vm_name --work "_work" --labels $vm_name
 ./svc.sh install
