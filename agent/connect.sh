@@ -7,12 +7,13 @@ fetch_metadata() {
 vm_name=`fetch_metadata orka_vm_name`
 user=`fetch_metadata github_user`
 repo=`fetch_metadata github_repo_name`
-which get-github-pat
+repo_url="https://github.com/$user/$repo"
+which /usr/local/bin/get-github-pat
 if [ $? -eq 1 ]; then
-	echo 'get-github-pat not found. Trying to get pat from metadata.'
-	pat=`fetch_metadata github_pat`
+        echo 'get-github-pat not found. Trying to get pat from metadata.'
+        pat=`fetch_metadata github_pat`
 else
-	pat=`get-github-pat`
+        pat=`/usr/local/bin/get-github-pat`
 fi
 runner_token=$(curl \
 -XPOST \
