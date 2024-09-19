@@ -4,6 +4,15 @@ fetch_metadata() {
         python3 -c "import sys, json; print(json.load(sys.stdin)['value'])"
 }
 
+# Restart Orka VM tools if the meta data http server doesn't respond.
+if ! curl -I http://169.254.169.254/ ; then
+    sudo launchctl bootout system/com.orka.vm.tools
+    sudo launchctl bootstrap system /Library/LaunchDaemons/com.orka.vm.tools.plist
+    sleep 10
+fi
+# Not sure whether the sleep is necessary, but it doesn't hurt,
+# and it makes sure that it's been given enough time to restart.
+
 vm_name=`fetch_metadata orka_vm_name`
 user=`fetch_metadata github_user`
 repo=`fetch_metadata github_repo_name`
